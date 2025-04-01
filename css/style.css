@@ -1,0 +1,72 @@
+body {
+    font-family: sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px;
+  }
+  
+  .filter-bank {
+    margin-bottom: 1em;
+  }
+  
+  .filter-emoji {
+    font-size: 2rem;
+    margin: 0 0.5em;
+    cursor: grab;
+  }
+  
+  .slots {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 1em;
+  }
+  
+  .slot {
+    width: 60px;
+    height: 60px;
+    border: 2px dashed #ccc;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem; /* So emojis look nice */
+  }
+  
+  .slot.active {
+    border-color: #666;
+  }
+  
+  #trash {
+    width: 60px;
+    height: 60px;
+    border: 2px dashed red;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1em;
+    font-weight: bold;
+  }
+  
+  #video, #outputCanvas {
+    display: none; /* we only show the final canvas */
+  }
+  
+  #outputCanvas {
+    display: block;
+    margin-top: 1em;
+    border: 1px solid #000;
+  }
+  
+  /* Param Modal */
+  .param-modal {
+    position: fixed;
+    top: 30%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #fff;
+    border: 2px solid #ccc;
+    padding: 1em;
+    display: none;
+  }
+  

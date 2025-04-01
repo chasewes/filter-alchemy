@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Video Filter Puzzle</title>
+  <!-- Link to our styles -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- The same HTML structure, but without inline CSS/JS -->
+
+  <h1>Video Filter Puzzle</h1>
+  <div id="filter-bank" class="filter-bank"></div>
+
+  <div class="slots">
+    <div class="slot" data-slot="0">
+      <span class="slot-emoji" draggable="true"></span>
+    </div>
+    <div class="slot" data-slot="1">
+      <span class="slot-emoji" draggable="true"></span>
+    </div>
+    <div class="slot" data-slot="2">
+      <span class="slot-emoji" draggable="true"></span>
+    </div>
+    <div class="slot" data-slot="3">
+      <span class="slot-emoji" draggable="true"></span>
+    </div>
+  </div>
+
+  <div id="trash">Trash</div>
+
+  <video id="video" autoplay playsinline></video>
+  <canvas id="outputCanvas" width="640" height="480"></canvas>
+
+  <div class="param-modal" id="paramModal">
+    <h3>Adjust Filter</h3>
+    <div id="filterParams"></div>
+    <button id="closeParams">Close</button>
+  </div>
+
+  <!-- 
+    1) Load filters.js FIRST so that FILTERS is available
+    2) Load main.js AFTER so it can reference FILTERS 
+  -->
+  <script src="js/filters.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
