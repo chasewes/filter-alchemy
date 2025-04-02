@@ -2,46 +2,65 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Video Filter Puzzle</title>
-  <!-- Link to our styles -->
+  <title>Wizard Filter Puzzle</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <!-- The same HTML structure, but without inline CSS/JS -->
 
-  <h1>Video Filter Puzzle</h1>
-  <div id="filter-bank" class="filter-bank"></div>
-
-  <div class="slots">
-    <div class="slot" data-slot="0">
-      <span class="slot-emoji" draggable="true"></span>
+  <header class="site-header">
+    <div class="logo-container">
+      <!-- Update the src if you use a different path or filename -->
+      <img src="images/background_logo.png" alt="Wizard Logo" class="site-logo">
+      <h1>Filter Alchemy</h1>
     </div>
-    <div class="slot" data-slot="1">
-      <span class="slot-emoji" draggable="true"></span>
+    <!-- Optional nav if needed
+    <nav>
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Levels</a></li>
+        ...
+      </ul>
+    </nav> -->
+  </header>
+
+  <main class="main-content">
+    <div class="puzzle-container">
+      <!-- Filter bank (drag FROM here) -->
+      <div id="filter-bank" class="filter-bank">
+        <!-- We'll dynamically create these from filters.js in main.js -->
+      </div>
+
+      <!-- 4 puzzle piece slots (drag TO here) -->
+      <div class="slots">
+        <div class="slot" data-slot="0" draggable="false"></div>
+        <div class="slot" data-slot="1" draggable="false"></div>
+        <div class="slot" data-slot="2" draggable="false"></div>
+        <div class="slot" data-slot="3" draggable="false"></div>
+      </div>
+
+      <!-- "Trash" zone: dragging an active filter onto this will remove it -->
+      <div id="trash" ondragover="event.preventDefault()">Trash</div>
+
+      <!-- Hidden video feed (source) -->
+      <video id="video" autoplay playsinline></video>
+
+      <!-- Output canvas where we apply filters and display -->
+      <canvas id="outputCanvas" width="640" height="480"></canvas>
+
+      <!-- A simple modal to adjust filter parameters -->
+      <div class="param-modal" id="paramModal">
+        <h3>Adjust Filter</h3>
+        <div id="filterParams"></div>
+        <button id="closeParams">Close</button>
+      </div>
     </div>
-    <div class="slot" data-slot="2">
-      <span class="slot-emoji" draggable="true"></span>
-    </div>
-    <div class="slot" data-slot="3">
-      <span class="slot-emoji" draggable="true"></span>
-    </div>
-  </div>
+  </main>
 
-  <div id="trash">Trash</div>
+  <footer class="site-footer">
+    <p>© 2025 Wizard Dad's Workshop. All rights reserved.</p>
+  </footer>
 
-  <video id="video" autoplay playsinline></video>
-  <canvas id="outputCanvas" width="640" height="480"></canvas>
-
-  <div class="param-modal" id="paramModal">
-    <h3>Adjust Filter</h3>
-    <div id="filterParams"></div>
-    <button id="closeParams">Close</button>
-  </div>
-
-  <!-- 
-    1) Load filters.js FIRST so that FILTERS is available
-    2) Load main.js AFTER so it can reference FILTERS 
-  -->
+  <!-- We load filters.js first, then main.js -->
   <script src="js/filters.js"></script>
   <script src="js/main.js"></script>
 </body>
