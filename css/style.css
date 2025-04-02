@@ -2,152 +2,173 @@
    VARIABLES (Colors, etc.)
 ------------------------------ */
 :root {
-    --wizard-accent: #7294a7; /* A cool gray-blue accent */
-    --bg-dark: #17384c;
-    --bg-light: #f7faf7;
-    --text-light: #ffffff;
-    --text-dark: #333333;
-    --font-main: "Open Sans", sans-serif;
-  }
-  
-  /* ------------------------------
-     GLOBAL RESETS
-  ------------------------------ */
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  
-  body {
-    background-color: var(--bg-dark);
-    color: var(--text-light);
-    font-family: var(--font-main);
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-  }
-  
-  /* ------------------------------
-     HEADER
-  ------------------------------ */
-  .site-header {
-    background-color: var(--wizard-accent);
-    padding: 1rem 2rem;
-  }
-  
-  .logo-container {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-  }
-  
-  .site-logo {
-    width: 60px;
-    height: auto;
-  }
-  
-  .site-header h1 {
-    font-size: 1.5rem;
-    color: var(--text-light);
-  }
-  
-  /* ------------------------------
-     MAIN CONTENT
-  ------------------------------ */
-  .main-content {
-    flex: 1; /* so footer stays at bottom */
-    padding: 2rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-  
-  .puzzle-container {
-    background-color: var(--bg-light);
-    color: var(--text-dark);
-    padding: 2rem;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.3);
-    width: 100%;
-    max-width: 800px;
-  }
-  
-  .filter-bank {
-    margin-bottom: 1em;
-    text-align: center;
-  }
-  
-  .filter-emoji {
-    font-size: 2rem;
-    margin: 0 0.5em;
-    cursor: grab;
-  }
-  
-  .slots {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 1em;
-    justify-content: center;
-  }
-  
-  .slot {
-    width: 60px;
-    height: 60px;
-    border: 2px dashed var(--wizard-accent);
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 2rem;
-    background-color: var(--bg-light);
-    color: var(--text-dark);
-    transition: border-color 0.3s;
-  }
-  
-  .slot.active {
-    border-color: var(--text-dark);
-  }
-  
-  /* We removed #trash altogether */
-  
-  /* Hide the raw video, only display the canvas */
-  #video, #outputCanvas {
-    display: none;
-  }
-  
-  #outputCanvas {
-    display: block;
-    margin: 1em auto;
-    border: 1px solid #000;
-  }
-  
-  /* Param Modal */
-  .param-modal {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: var(--bg-light);
-    color: var(--text-dark);
-    border: 2px solid var(--wizard-accent);
-    padding: 1em;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.3);
-    z-index: 999;
-    min-width: 300px;
-    display: none; /* hidden by default */
-  }
-  
-  /* ------------------------------
-     FOOTER
-  ------------------------------ */
-  .site-footer {
-    background-color: var(--wizard-accent);
-    color: var(--text-light);
-    text-align: center;
-    padding: 1rem;
-  }
-  
+  --wizard-accent: #7294a7; /* A cool gray-blue accent */
+  --bg-dark: #17384c;
+  --bg-light: #f7faf7;
+  --text-light: #ffffff;
+  --text-dark: #333333;
+  --font-main: "Open Sans", sans-serif;
+}
+
+/* GLOBAL RESETS */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--bg-dark);
+  color: var(--text-light);
+  font-family: var(--font-main);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ------------------------------
+   HEADER
+------------------------------ */
+.site-header {
+  background-color: var(--wizard-accent);
+  padding: 1rem 2rem;
+  display: flex;               /* flex so we can space the logo and nav */
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.site-logo {
+  width: 60px;
+  height: auto;
+}
+
+.site-header h1 {
+  font-size: 1.5rem;
+  color: var(--text-light);
+}
+
+.site-nav {
+  display: flex;
+  gap: 1rem;
+}
+
+.nav-link {
+  text-decoration: none;
+  color: var(--text-light);
+  background-color: rgba(255,255,255,0.1);
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  transition: background-color 0.2s;
+}
+
+.nav-link:hover {
+  background-color: rgba(255,255,255,0.3);
+}
+
+.nav-link.active {
+  background-color: rgba(255,255,255,0.45);
+  color: var(--text-dark);
+}
+
+/* ------------------------------
+   MAIN CONTENT
+------------------------------ */
+.main-content {
+  flex: 1;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.puzzle-container {
+  background-color: var(--bg-light);
+  color: var(--text-dark);
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+  width: 100%;
+  max-width: 800px;
+}
+
+.filter-bank {
+  margin-bottom: 1em;
+  text-align: center;
+}
+
+.filter-emoji {
+  font-size: 2rem;
+  margin: 0 0.5em;
+  cursor: grab;
+}
+
+.slots {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 1em;
+  justify-content: center;
+}
+
+.slot {
+  width: 60px;
+  height: 60px;
+  border: 2px dashed var(--wizard-accent);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  background-color: var(--bg-light);
+  color: var(--text-dark);
+  transition: border-color 0.3s;
+}
+
+.slot.active {
+  border-color: var(--text-dark);
+}
+
+/* Hide the raw video in the playground, only display the canvas */
+#video, #outputCanvas {
+  display: none;
+}
+
+#outputCanvas {
+  display: block;
+  margin: 1em auto;
+  border: 1px solid #000;
+}
+
+/* Param Modal */
+.param-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: var(--bg-light);
+  color: var(--text-dark);
+  border: 2px solid var(--wizard-accent);
+  padding: 1em;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+  z-index: 999;
+  min-width: 300px;
+  display: none;
+}
+
+/* ------------------------------
+   FOOTER
+------------------------------ */
+.site-footer {
+  background-color: var(--wizard-accent);
+  color: var(--text-light);
+  text-align: center;
+  padding: 1rem;
+}

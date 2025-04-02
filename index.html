@@ -1,18 +1,22 @@
+<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Filter Alchemy</title>
+  <meta charset="UTF-8">
+  <title>Filter Alchemy – Playground</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-
   <header class="site-header">
     <div class="logo-container">
-      <!-- Update the src if you use a different path or filename -->
       <img src="images/background_logo.png" alt="Wizard Logo" class="site-logo">
-      <h1>Filter Alchemy</h1>
+      <h1>Filter Alchemy – Playground</h1>
     </div>
+    <nav class="site-nav">
+      <!-- 'active' on Playground link, normal link for Puzzles -->
+      <a href="index.html" class="nav-link active">Playground</a>
+      <a href="puzzles.html" class="nav-link">Puzzles</a>
+    </nav>
   </header>
 
   <main class="main-content">
@@ -46,10 +50,9 @@
   </main>
 
   <footer class="site-footer">
-    <p>© 2025 Wizard Dad's Workshop. All rights reserved.</p>
+    <p>© 2025 Wizard Dad’s Workshop</p>
   </footer>
 
-  <!-- We load filters.js first, then main.js -->
   <script src="js/filters.js"></script>
   <script src="js/main.js"></script>
 </body>

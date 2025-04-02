@@ -56,7 +56,7 @@ const FILTERS = {
       }
     },
   
-    // 3) Psychedelic Color Fade (Sinusoidal)
+    // 3) Psychedelic Color Fade
     colorFade: {
       name: 'Color Fade',
       emoji: '🌈',
@@ -64,7 +64,6 @@ const FILTERS = {
       apply: function(imageData, config) {
         const data = imageData.data;
         config.phase += config.speed;
-  
         const phaseR = config.phase * 1.0;
         const phaseG = config.phase * 1.3;
         const phaseB = config.phase * 1.6;
@@ -77,7 +76,6 @@ const FILTERS = {
       },
       renderParamUI: function(container, config) {
         container.innerHTML = '';
-  
         const label = document.createElement('label');
         label.textContent = 'Speed (0 = still, higher = faster):';
   
@@ -108,14 +106,11 @@ const FILTERS = {
         const h = imageData.height;
         const data = imageData.data;
         const pixelSize = config.pixelSize || 8;
-  
-        // Copy data first
         const copy = new Uint8ClampedArray(data);
   
         for (let y = 0; y < h; y += pixelSize) {
           for (let x = 0; x < w; x += pixelSize) {
             let sumR = 0, sumG = 0, sumB = 0, count = 0;
-  
             for (let yy = 0; yy < pixelSize; yy++) {
               for (let xx = 0; xx < pixelSize; xx++) {
                 const ny = y + yy;
@@ -132,7 +127,6 @@ const FILTERS = {
             const avgR = sumR / count;
             const avgG = sumG / count;
             const avgB = sumB / count;
-  
             for (let yy = 0; yy < pixelSize; yy++) {
               for (let xx = 0; xx < pixelSize; xx++) {
                 const ny = y + yy;
@@ -170,7 +164,7 @@ const FILTERS = {
       }
     },
   
-    // 5) Blur (naive box blur)
+    // 5) Blur
     blur: {
       name: 'Blur',
       emoji: '💧',
@@ -180,9 +174,7 @@ const FILTERS = {
         const w = imageData.width;
         const h = imageData.height;
         const data = imageData.data;
-  
         const copy = new Uint8ClampedArray(data);
-        const kernelSize = (2 * radius + 1);
   
         for (let y = 0; y < h; y++) {
           for (let x = 0; x < w; x++) {
@@ -240,7 +232,6 @@ const FILTERS = {
         const w = imageData.width;
         const h = imageData.height;
         const data = imageData.data;
-  
         const copy = new Uint8ClampedArray(data);
         const cx = w / 2;
         const cy = h / 2;
@@ -255,7 +246,6 @@ const FILTERS = {
               const theta = Math.atan2(dy, dx) + swirlFactor;
               const srcX = Math.floor(cx + dist * Math.cos(theta));
               const srcY = Math.floor(cy + dist * Math.sin(theta));
-  
               if (srcX >= 0 && srcX < w && srcY >= 0 && srcY < h) {
                 const srcIdx = (srcY * w + srcX) * 4;
                 const dstIdx = (y * w + x) * 4;
@@ -270,7 +260,6 @@ const FILTERS = {
       },
       renderParamUI: function(container, config) {
         container.innerHTML = '';
-  
         const radiusLabel = document.createElement('label');
         radiusLabel.textContent = 'Swirl Radius:';
         const radiusSlider = document.createElement('input');
@@ -292,7 +281,7 @@ const FILTERS = {
         angleLabel.textContent = 'Swirl Angle:';
         const angleSlider = document.createElement('input');
         angleSlider.type = 'range';
-        angleSlider.min = 0;
+        angleSlider.min = -5;
         angleSlider.max = 5;
         angleSlider.step = 0.1;
         angleSlider.value = config.angle;
@@ -313,7 +302,6 @@ const FILTERS = {
       defaultConfig: { type: 'comicBook' },
       apply: function(imageData, config) {
         const data = imageData.data;
-  
         for (let i = 0; i < data.length; i += 4) {
           data[i + 0] = quantize(data[i + 0]);
           data[i + 1] = quantize(data[i + 1]);

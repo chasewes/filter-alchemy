@@ -1,0 +1,151 @@
+<!-- puzzles.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Filter Alchemy – Puzzles</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    /* Quick inline style overrides */
+
+    .puzzle-row {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin-bottom: 1.5rem;
+    }
+    .puzzle-col {
+      text-align: center;
+    }
+
+    /* images/canvases: limit the displayed size with max-200, 
+       but we won't change the internal resolution of the canvas */
+    .puzzle-col img,
+    .puzzle-col canvas {
+      max-width: 200px;
+      max-height: 200px;
+      display: block;
+      margin: 0 auto;
+      border: 1px solid #666;
+    }
+
+    .slots {
+      margin-bottom: 1.5rem;
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+    }
+    .slot {
+      width: 60px;
+      height: 60px;
+      border: 2px dashed #7294a7;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      background-color: #f7faf7;
+      color: #333;
+      transition: border-color 0.3s;
+    }
+    .slot.active {
+      border-color: #333;
+    }
+
+    #scoreMessage {
+      text-align: center;
+      font-weight: bold;
+      margin-bottom: 1rem;
+    }
+    .button-row {
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+
+    /* Param modal styling, similar to Playground */
+    .param-modal {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: #f7faf7;
+      color: #333;
+      border: 2px solid #7294a7;
+      padding: 1em;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+      z-index: 999;
+      min-width: 300px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="logo-container">
+      <img src="images/background_logo.png" alt="Wizard Logo" class="site-logo">
+      <h1>Filter Alchemy Puzzles</h1>
+    </div>
+    <nav class="site-nav">
+      <a href="index.html" class="nav-link">Playground</a>
+      <a href="puzzles.html" class="nav-link active">Puzzles</a>
+    </nav>
+  </header>
+
+  <main class="main-content puzzle-container">
+
+    <!-- Row with three columns (Input, YourImage, Goal) -->
+    <div class="puzzle-row">
+      <div class="puzzle-col">
+        <h2>Input Image</h2>
+        <img id="inputImage" src="" alt="Puzzle Input">
+      </div>
+
+      <div class="puzzle-col">
+        <h2>Your Image</h2>
+        <!-- We'll keep the canvas's internal resolution at full, but let CSS scale it down -->
+        <canvas id="resultCanvas"></canvas>
+      </div>
+
+      <div class="puzzle-col">
+        <h2>Goal Image</h2>
+        <img id="targetImage" src="" alt="Puzzle Target">
+      </div>
+    </div>
+
+    <!-- Filter bank & slots for dragging filters -->
+    <div id="filter-bank" class="filter-bank"></div>
+    <div class="slots">
+      <div class="slot" data-slot="0" draggable="false"></div>
+      <div class="slot" data-slot="1" draggable="false"></div>
+      <div class="slot" data-slot="2" draggable="false"></div>
+      <div class="slot" data-slot="3" draggable="false"></div>
+    </div>
+
+    <!-- Score text -->
+    <p id="scoreMessage">Match Score: 0%</p>
+
+    <!-- Buttons -->
+    <div class="button-row">
+      <button id="newImageBtn">See it on a new image</button>
+      <button id="newPuzzleBtn">New Puzzle</button>
+    </div>
+
+    <!-- Param Modal for adjusting filter parameters -->
+    <div class="param-modal" id="paramModal">
+      <h3>Adjust Filter</h3>
+      <div id="filterParams"></div>
+      <button id="closeParams">Close</button>
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    <p>© 2025 Wizard Dad’s Workshop. All rights reserved.</p>
+  </footer>
+
+  <!-- We'll reuse filters.js but load puzzles.js for puzzle logic -->
+  <script src="js/filters.js"></script>
+  <script src="js/puzzles.js"></script>
+</body>
+</html>
