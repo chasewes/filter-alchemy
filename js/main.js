@@ -3,14 +3,13 @@
 // We'll store the active filters in an array with up to 4 items
 const activeFilters = [null, null, null, null];
 
-// Dom elements
+// DOM elements
 const video = document.getElementById('video');
 const outputCanvas = document.getElementById('outputCanvas');
 const ctx = outputCanvas.getContext('2d');
 
 const filterBank = document.getElementById('filter-bank');
 const slots = document.querySelectorAll('.slot');
-const trash = document.getElementById('trash');
 
 const paramModal = document.getElementById('paramModal');
 const filterParamsDiv = document.getElementById('filterParams');
@@ -18,20 +17,22 @@ const closeParamsBtn = document.getElementById('closeParams');
 
 let currentSlotIndex = null;
 
-// 1) Build the filter bank from FILTERS
+/********************************************************
+ * 1) Build the filter bank from FILTERS
+ ********************************************************/
 Object.keys(FILTERS).forEach(key => {
   const filterDef = FILTERS[key];
   // Create an emoji span
   const span = document.createElement('span');
   span.classList.add('filter-emoji');
   span.setAttribute('draggable', 'true');
-  // Set data attributes so we can read in drag events
+  // Set data attributes so we can read them in drag events
   span.dataset.filterKey = key; 
   span.textContent = filterDef.emoji;
   // Show name on hover
   span.title = filterDef.name;
 
-  // Add dragstart event
+  // On dragstart, store info in dataTransfer
   span.addEventListener('dragstart', e => {
     e.dataTransfer.setData('text/filterKey', key);
     e.dataTransfer.setData('text/emoji', span.textContent);
@@ -41,7 +42,9 @@ Object.keys(FILTERS).forEach(key => {
   filterBank.appendChild(span);
 });
 
-// 2) Set up drag-and-drop for the slots
+/********************************************************
+ * 2) Set up drag-and-drop for the slots
+ ********************************************************/
 slots.forEach(slot => {
   slot.addEventListener('dragover', e => e.preventDefault());
 
@@ -111,23 +114,41 @@ slots.forEach(slot => {
   });
 });
 
-// 3) Trash (remove a slot’s filter)
-trash.addEventListener('dragover', e => e.preventDefault());
-trash.addEventListener('drop', e => {
+/********************************************************
+ * 3) Remove filter if dropped outside a slot
+ ********************************************************/
+// We allow dropping anywhere on document (which includes the slots).
+// If it lands on a slot, the slot's drop handler (above) is used.
+// Otherwise, we remove the filter from the old slot (if source was 'slot').
+
+document.addEventListener('dragover', e => {
+  // Let document accept the drop so 'drop' event fires
   e.preventDefault();
-  const slotIndex = e.dataTransfer.getData('text/slotIndex');
+});
+
+document.addEventListener('drop', e => {
   const source = e.dataTransfer.getData('text/source');
-  if (source === 'slot' && slotIndex) {
-    // Clear that slot
-    activeFilters[slotIndex] = null;
-    const slotElem = document.querySelector(`.slot[data-slot="${slotIndex}"]`);
-    slotElem.textContent = '';
-    slotElem.classList.remove('active');
-    slotElem.setAttribute('draggable', 'false');
+  const oldSlotIndex = e.dataTransfer.getData('text/slotIndex');
+
+  // If the user was dragging a filter FROM a slot, but the drop target
+  // is NOT one of our .slot elements, remove that filter from the old slot
+  if (source === 'slot' && oldSlotIndex != null) {
+    // Check if this drop happened on a slot:
+    const dropTarget = e.target;
+    if (!dropTarget.classList.contains('slot')) {
+      // That means the user dropped outside a slot, so remove the filter from the old slot
+      activeFilters[oldSlotIndex] = null;
+      const oldSlotElem = document.querySelector(`.slot[data-slot="${oldSlotIndex}"]`);
+      oldSlotElem.textContent = '';
+      oldSlotElem.classList.remove('active');
+      oldSlotElem.setAttribute('draggable', 'false');
+    }
   }
 });
 
-// 4) Show parameter modal
+/********************************************************
+ * 4) Show parameter modal
+ ********************************************************/
 function showParamModal(config) {
   // Clear old UI
   filterParamsDiv.innerHTML = '';
@@ -146,7 +167,9 @@ closeParamsBtn.addEventListener('click', () => {
   paramModal.style.display = 'none';
 });
 
-// 5) Get user media & start rendering
+/********************************************************
+ * 5) Get user media & start rendering
+ ********************************************************/
 navigator.mediaDevices.getUserMedia({ video: true })
   .then(stream => {
     video.srcObject = stream;
@@ -158,7 +181,9 @@ navigator.mediaDevices.getUserMedia({ video: true })
     console.error('Error accessing webcam:', err);
   });
 
-// 6) Render loop
+/********************************************************
+ * 6) Render loop
+ ********************************************************/
 function renderFrame() {
   // Mirror the video if you want a "selfie" style
   ctx.save();

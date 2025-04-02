@@ -56,7 +56,7 @@
      MAIN CONTENT
   ------------------------------ */
   .main-content {
-    flex: 1; /* so that footer stays at bottom */
+    flex: 1; /* so footer stays at bottom */
     padding: 2rem;
     display: flex;
     flex-direction: column;
@@ -101,7 +101,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 2rem; 
+    font-size: 2rem;
     background-color: var(--bg-light);
     color: var(--text-dark);
     transition: border-color 0.3s;
@@ -111,26 +111,11 @@
     border-color: var(--text-dark);
   }
   
-  #trash {
-    width: 60px;
-    height: 60px;
-    border: 2px dashed #e74c3c;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 1em auto;
-    font-weight: bold;
-    background-color: var(--bg-light);
-    color: var(--text-dark);
-    transition: border-color 0.3s;
-  }
+  /* We removed #trash altogether */
   
-  #trash:hover {
-    border-color: #ff605f;
-  }
-  
+  /* Hide the raw video, only display the canvas */
   #video, #outputCanvas {
-    display: none; /* we only show the final canvas for performance reasons */
+    display: none;
   }
   
   #outputCanvas {
