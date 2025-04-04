@@ -22,12 +22,15 @@
        but we won't change the internal resolution of the canvas */
     .puzzle-col img,
     .puzzle-col canvas {
-      max-width: 200px;
-      max-height: 200px;
+      width: 100%;
+      height: auto;
+      max-width: 100%;
       display: block;
       margin: 0 auto;
       border: 1px solid #666;
+      object-fit: contain;
     }
+
 
     .slots {
       margin-bottom: 1.5rem;
