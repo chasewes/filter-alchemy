@@ -3,13 +3,13 @@
 /********************************************************
  * Config
 ********************************************************/
-const imagesList = [
-  "images/background_logo.png"
-  // etc. Make sure these actually exist in /images
-];
+
+const IMAGE_SIZE = 800;
+let currentSeed = Date.now();
+const getImageUrl = seed => `https://picsum.photos/seed/${seed}/${IMAGE_SIZE}`;
+
 
 const maxFilters = 3;
-
 /********************************************************
  * Variables
 ********************************************************/
@@ -82,8 +82,9 @@ function newPuzzle() {
   document.getElementById('scoreMessage').textContent = 'Match Score: 0%';
 
   // Pick random image
-  puzzleImage = randomPick(imagesList);
-
+  currentSeed = Date.now();
+  puzzleImage = getImageUrl(currentSeed);
+  
   // Pick random subset of filters
   const allKeys = Object.keys(FILTERS);
   const numFilters = 1 + Math.floor(Math.random() * maxFilters);
@@ -109,8 +110,9 @@ function newPuzzle() {
  * same puzzle filters, new random input
 ********************************************************/
 function seeItOnNewImage() {
-  puzzleImage = randomPick(imagesList);
-
+  currentSeed = Date.now();
+  puzzleImage = getImageUrl(currentSeed);
+  
   // Re-generate the target for that same secret combo
   generateTargetImage(puzzleImage, secretFilters).then(dataURL => {
     document.getElementById('targetImage').src = dataURL;
@@ -127,12 +129,14 @@ function seeItOnNewImage() {
 function generateTargetImage(imgSrc, filterList) {
   return new Promise(resolve => {
     const img = new Image();
+    img.crossOrigin = "anonymous";
     img.src = imgSrc;
+
     img.onload = () => {
       const c = document.createElement('canvas');
       c.width = img.width;
       c.height = img.height;
-      const cx = c.getContext('2d');
+      const cx = c.getContext('2d', { willReadFrequently: true });
 
       cx.drawImage(img, 0, 0);
       let frame = cx.getImageData(0, 0, c.width, c.height);
@@ -286,10 +290,12 @@ function showParamModal(filterConfig) {
 function applyUserFilters() {
   if (!puzzleImage) return;
   const resultCanvas = document.getElementById('resultCanvas');
-  const rcx = resultCanvas.getContext('2d');
+  const rcx = resultCanvas.getContext('2d', { willReadFrequently: true });
 
   const img = new Image();
+  img.crossOrigin = "anonymous";
   img.src = puzzleImage;
+
   img.onload = () => {
     // We'll set the canvas to the image's *natural* size
     resultCanvas.width = img.width;
@@ -353,12 +359,13 @@ async function compareAndScore(userFrame) {
 function generateTargetFrame(imgSrc, filters, w, h) {
   return new Promise(resolve => {
     const img = new Image();
-    img.src = imgSrc;
+    img.crossOrigin = "anonymous";
+    img.src = imgSrc;    
     img.onload = () => {
       const c = document.createElement('canvas');
       c.width = w;
       c.height = h;
-      const cx = c.getContext('2d');
+      const cx = c.getContext('2d', { willReadFrequently: true });
 
       // scale the image into w,h
       cx.drawImage(img, 0, 0, w, h);
